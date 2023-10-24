@@ -111,7 +111,6 @@ If you think your connection settings are wrong, press Enter to run the Login Ac
     });
 
     kuma.connect();
-
   }
 
   useEffect(() => {
