@@ -20,7 +20,7 @@ import { ErrorScreen } from "./error-screen";
 
 export default function Command() {
   const [kuma_url, setKumaUrl] = useState<string>("");
-  const [monitorListFetched, setMonitorListFetched] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [kumaInstance, setKumaInstance] = useState<UptimeKuma | null>(null);
   const {
     monitors,
@@ -36,6 +36,7 @@ export default function Command() {
   function logout() {
     LocalStorage.removeItem("kuma_url");
     LocalStorage.removeItem("kuma_token");
+    setMonitors([]);
     push(<AuthForm />);
   }
 
@@ -45,8 +46,11 @@ export default function Command() {
 
     if (!kuma_url || !kuma_token) {
       push(<AuthForm />);
+
       return;
     }
+
+    setIsLoading(true);
 
     setKumaUrl(kuma_url);
 
@@ -69,7 +73,7 @@ export default function Command() {
         style: Toast.Style.Failure,
       });
 
-      setMonitorListFetched(true);
+      setIsLoading(false);
       kuma.disconnect();
 
       const errorMessage = `
@@ -87,7 +91,7 @@ If you think your connection settings are wrong, press Enter to run the Login Ac
 
       setMonitors(updatedMonitors);
 
-      setMonitorListFetched(true);
+      setIsLoading(false);
     });
 
     kuma.on("heartbeatList", (payload: HeartbeatList) => {
@@ -107,6 +111,7 @@ If you think your connection settings are wrong, press Enter to run the Login Ac
     });
 
     kuma.connect();
+
   }
 
   useEffect(() => {
@@ -115,7 +120,7 @@ If you think your connection settings are wrong, press Enter to run the Login Ac
 
   return (
     <List
-      isLoading={!monitorListFetched}
+      isLoading={isLoading}
       actions={
         <ActionPanel>
           <Action.Push title="Login" icon={Icon.Power} target={<AuthForm />} />
