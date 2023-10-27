@@ -14,7 +14,7 @@
   "license": "MIT",
   "commands": [
     {
-      "name": "list-monitors",
+      "name": "index",
       "title": "Show Monitors",
       "description": "Show a list of all your monitors with some basic data",
       "subtitle": "Uptime Kuma",
