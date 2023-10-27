@@ -6,7 +6,7 @@ import useAppStore from "./utils/store";
 import { getAccessories, getMonitorStatusColor, getMonitorStatusIcon } from "./utils/display";
 import MonitorDetail from "./monitor-detail";
 
-export function ListMonitors() {
+export function ListComponent() {
   const [kuma_url, setKumaUrl] = useCachedState<string>("kuma-url", "");
   const [kuma_error, setKumaError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -27,7 +27,7 @@ export function ListMonitors() {
   }
 
   async function initCommand() {
-    const kuma_token = await LocalStorage.getItem("kuma_token");
+    const kuma_token = await LocalStorage.getItem("kum1a_token");
     const kuma = new UptimeKuma(kuma_url, kuma_token as string);
 
     setKumaInstance(kuma);

@@ -34,8 +34,8 @@ export function AuthForm(props: { onSave: (url: string) => void }) {
         await LocalStorage.setItem("kuma_token", token);
       } catch (error) {
         showToast({
-          title: "Unable to get token, please check your credentials",
           style: Toast.Style.Failure,
+          title: "Unable to get token, please check your credentials",
         });
         setValidationError("kuma_username", "Check Username");
         setValidationError("kuma_password", "Check Password");
